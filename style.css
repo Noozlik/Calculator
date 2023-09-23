@@ -1,0 +1,65 @@
+.calculator {
+    margin: 50px auto;
+    width: 300px;
+    height: 500px;
+    border: 1px solid #000;
+    border-radius: 40px;
+    background: #000;
+    color: #fff;
+    font-family: arial;
+    padding: 18px;
+    box-shadow: 0 0 20px rgba(0,0,0,1);
+}
+
+.sum {
+    margin-bottom: 5px;
+    padding: 10px;
+    height: 120px;
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    align-content: flex-end;
+}
+
+.sum p {
+    margin: 0 auto;
+    font-size: 4rem;
+}
+
+.buttons{
+    display: grid;
+    grid-template-areas:
+    "ac plus_minus percent division"
+    "seven eigth nine multiplication"
+    "four five six minus"
+    "one two three plus"
+    "zero zero comma equals";
+    grid-gap: 7px;
+    justify-items: center;
+}
+
+.btn {
+    width: 60px;
+    height: 60px;
+    background: #333333;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 60px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.btn.zero {
+    grid-area: zero;
+    width: 100%;
+    border-radius: 34px;
+}
+
+.btn.bg-grey {
+    background: #696969;
+}
+
+.btn.bg-orange {
+    background: #fc9c14;
+}
