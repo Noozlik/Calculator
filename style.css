@@ -12,6 +12,7 @@
 }
 
 .sum {
+    font-size: 70px;
     margin-bottom: 5px;
     padding: 10px;
     height: 120px;
@@ -21,10 +22,6 @@
     align-content: flex-end;
 }
 
-.sum p {
-    margin: 0 auto;
-    font-size: 4rem;
-}
 
 .buttons{
     display: grid;
@@ -45,7 +42,7 @@
     border-radius: 50%;
     text-align: center;
     line-height: 60px;
-    font-size: 1.5rem;
+    font-size: 30px;
     cursor: pointer;
     user-select: none;
 }
