@@ -1,7 +1,8 @@
 let display= document.querySelector(".sum");
 /*let buttons = Array.from(document.querySelectorAll(".btn"));*/
 let but = document.querySelectorAll(".btn");
-let operator
+/*const arrayNumbers = ['0','1','2','3','4','6,','7','8','9'];*/
+const arraySign = ['+','-','*','/'];
 
 function plus (a, b) {
     return a + b;
@@ -31,11 +32,71 @@ function percent (a, b) {
     return (a * b) / 100;
 }
 
+function equals() {
+    let expression = display.innerText;
+    let result = null;
+
+    for (let i = 0; i < arraySign.length; i++) {
+        let signIndex = expression.indexOf(arraySign[i]);
+        if (signIndex !== -1) {
+            let num1 = parseFloat(expression.slice(0, signIndex));
+            let num2 = parseFloat(expression.slice(signIndex + 1));
+            switch (arraySign[i]) {
+                case "+":
+                    result = plus(num1, num2);
+                    break;
+                case "-":
+                    result = minus(num1, num2);
+                    break;
+                case "*":
+                    result = multi(num1, num2);
+                    break;
+                case "/":
+                    result = division(num1, num2);
+                    break;
+            }
+            break;
+        }
+    }
+    return result;
+}
+
+but.forEach((item)=> {
+    item.addEventListener("click", function (event) {
+        switch (event.target.innerText) {
+            case "+":
+            case "-":
+            case "*":
+            case "/":
+                display.innerText += event.target.innerText;
+                break;
+            case "+/-":
+                display.innerText = plusMinus(parseFloat(display.innerText));
+                break;
+            case "%":
+                display.innerText = percent(display.innerText);
+                break;
+            case "=":
+                display.innerText = equals();
+                break;
+            case "AC":
+                display.innerText = "0";
+                break;
+            default:
+                if (display.innerText === "0" && event.target.innerText !== ".") {
+                    display.innerText = event.target.innerText;
+                } else {
+                    display.innerText += event.target.innerText;
+                }
+        }
+    });
+});
+
 /*function clearAll() {
     display.innerText = "0";
 }*/
 
-function equals (a, b) {
+/*function equals (a, b) {
     switch (operator) {
         case "+":
             return plus(a, b);
@@ -52,9 +113,9 @@ function equals (a, b) {
         default:
             return "Error!";
     }
-}
+}*/
 
-but.forEach((item)=> {
+/*but.forEach((item)=> {
     item.addEventListener("click", function (event) {
         switch (event.target.innerText) {
             case "+":
@@ -90,7 +151,7 @@ but.forEach((item)=> {
                 }
         }
     })
-})
+})*/
 
 
 /*buttons.map((btn) => {
