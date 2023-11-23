@@ -1,8 +1,17 @@
 let display= document.querySelector(".sum");
 /*let buttons = Array.from(document.querySelectorAll(".btn"));*/
 let but = document.querySelectorAll(".btn");
-/*const arrayNumbers = ['0','1','2','3','4','6,','7','8','9'];*/
-const arraySign = ['+','-','*','/'];
+// const arrayNumbers = ['0','1','2','3','4','6,','7','8','9'];
+// const arraySign = ['+','-','*','/','%'];
+let stack = [];
+
+// function push(item) {
+//     stack.push(item);
+// }
+
+// function look() {
+//     return stack[stack.length - 1];
+// }
 
 function plus (a, b) {
     return a + b;
@@ -35,13 +44,13 @@ function percent (a, b) {
 function equals() {
     let expression = display.innerText;
     let result = null;
-
-    for (let i = 0; i < arraySign.length; i++) {
-        let signIndex = expression.indexOf(arraySign[i]);
+    let sign = ['+','-','*','/','%'];
+    for (let i = 0; i < sign.length; i++) {
+        let signIndex = expression.indexOf(sign[i]);
         if (signIndex !== -1) {
             let num1 = parseFloat(expression.slice(0, signIndex));
             let num2 = parseFloat(expression.slice(signIndex + 1));
-            switch (arraySign[i]) {
+            switch (sign[i]) {
                 case "+":
                     result = plus(num1, num2);
                     break;
@@ -54,12 +63,46 @@ function equals() {
                 case "/":
                     result = division(num1, num2);
                     break;
+                case "%":
+                    result = percent(num1, num2);
+                    break;
             }
             break;
         }
     }
     return result;
 }
+
+// function equals() {
+//     let expression = display.innerText;
+//     let result = null;
+//     for (let i = 0; i < arraySign.length; i++) {
+//         let signIndex = expression.indexOf(arraySign[i]);
+//         if (signIndex !== -1) {
+//             let num1 = parseFloat(expression.slice(0, signIndex));
+//             let num2 = parseFloat(expression.slice(signIndex + 1));
+//             switch (arraySign[i]) {
+//                 case "+":
+//                     result = plus(num1, num2);
+//                     break;
+//                 case "-":
+//                     result = minus(num1, num2);
+//                     break;
+//                 case "*":
+//                     result = multi(num1, num2);
+//                     break;
+//                 case "/":
+//                     result = division(num1, num2);
+//                     break;
+//                 case "%":
+//                     result = percent(num1, num2);
+//                     break;
+//             }
+//             break;
+//         }
+//     }
+//     return result;
+// }
 
 but.forEach((item)=> {
     item.addEventListener("click", function (event) {
@@ -68,19 +111,23 @@ but.forEach((item)=> {
             case "-":
             case "*":
             case "/":
-                display.innerText += event.target.innerText;
+            case "%":
+                if (stack.pop() !== "+" && stack.pop() !== "-" && stack.pop() !== "*" && stack.pop() !== "/") {
+                    display.innerText += event.target.innerText;
+                }
                 break;
             case "+/-":
                 display.innerText = plusMinus(parseFloat(display.innerText));
                 break;
-            case "%":
-                display.innerText = percent(display.innerText);
-                break;
+            /*case "%":
+                display.innerText = percent(num1, num2);
+                break;*/
             case "=":
                 display.innerText = equals();
                 break;
             case "AC":
                 display.innerText = "0";
+                stack = [];
                 break;
             default:
                 if (display.innerText === "0" && event.target.innerText !== ".") {
@@ -89,6 +136,7 @@ but.forEach((item)=> {
                     display.innerText += event.target.innerText;
                 }
         }
+        stack.push(event.target.innerText);
     });
 });
 
