@@ -2,22 +2,29 @@ body {
     background: #838383;
 }
 
+.calculator-wrapper {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .calculator {
-    margin: 50px auto;
+    margin: 40px;
     width: 300px;
     height: 500px;
     border: 1px solid #000;
     border-radius: 40px;
     background: #000;
     color: #fff;
-    font-family: arial;
+    font-family: arial, sans-serif;
     padding: 18px;
     box-shadow: 0 0 20px rgba(0,0,0,1);
 }
 
 .sum {
     font-size: 70px;
-    margin-bottom: 5px;
     padding: 10px;
     height: 120px;
     display: flex;
@@ -63,4 +70,27 @@ body {
 
 .btn.bg-orange {
     background: #fc9c14;
+}
+
+.additional-window {
+    margin: 40px;
+    padding: 18px;
+    width: 300px;
+    height: 500px;
+    border: 1px solid #000;
+    box-shadow: 0 0 20px rgba(0,0,0,1);
+    border-radius: 40px;
+    background: #000;
+    color: #fff;
+}
+
+.calc-history {
+    height: 120px;
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    font-size: 30px;
+    padding: 10px;
+    font-family: AriL, sans-serif;
 }

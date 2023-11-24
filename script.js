@@ -33,18 +33,18 @@ function division (a, b) {
     }
 }
 
-function plusMinus(a) {
-    return -1 * a;
-}
+// function plusMinus(a) {
+//     return -1 * a;
+// }
 
-function percent (a, b) {
-    return (a * b) / 100;
-}
+// function percent (a, b) {
+//     return (a * b) / 100;
+// }
 
 function equals() {
     let expression = display.innerText;
     let result = null;
-    let sign = ['+','-','*','/','%'];
+    let sign = ['+','-','x','/','%'];
     for (let i = 0; i < sign.length; i++) {
         let signIndex = expression.indexOf(sign[i]);
         if (signIndex !== -1) {
@@ -57,7 +57,7 @@ function equals() {
                 case "-":
                     result = minus(num1, num2);
                     break;
-                case "*":
+                case "x":
                     result = multi(num1, num2);
                     break;
                 case "/":
@@ -109,7 +109,7 @@ but.forEach((item)=> {
         switch (event.target.innerText) {
             case "+":
             case "-":
-            case "*":
+            case "x":
             case "/":
             case "%":
                 if (stack.pop() !== "+" && stack.pop() !== "-" && stack.pop() !== "*" && stack.pop() !== "/") {
@@ -117,7 +117,11 @@ but.forEach((item)=> {
                 }
                 break;
             case "+/-":
-                display.innerText = plusMinus(parseFloat(display.innerText));
+                if (display.innerText[0] === "-") {
+                    display.innerText = display.innerText.slice(1);
+                } else {
+                    display.innerText = '-' + display.innerText;
+                }
                 break;
             /*case "%":
                 display.innerText = percent(num1, num2);
