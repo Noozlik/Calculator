@@ -1,4 +1,5 @@
 let display= document.querySelector(".sum");
+let history = document.querySelector(".calc-history");
 /*let buttons = Array.from(document.querySelectorAll(".btn"));*/
 let but = document.querySelectorAll(".btn");
 // const arrayNumbers = ['0','1','2','3','4','6,','7','8','9'];
@@ -37,9 +38,9 @@ function division (a, b) {
 //     return -1 * a;
 // }
 
-// function percent (a, b) {
-//     return (a * b) / 100;
-// }
+function percent (a, b) {
+    return (a * b) / 100;
+}
 
 function equals() {
     let expression = display.innerText;
@@ -70,6 +71,8 @@ function equals() {
             break;
         }
     }
+    // history.innerText = "";
+    history.innerText += expression + " = " + result + "\n";
     return result;
 }
 
