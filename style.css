@@ -1,5 +1,5 @@
 body {
-    background: #838383;
+    background: #626262;
 }
 
 .calculator-wrapper {
@@ -24,15 +24,15 @@ body {
 }
 
 .sum {
-    font-size: 70px;
+    font-size: 60px;
     padding: 10px;
     height: 120px;
     display: flex;
     flex-direction: column-reverse;
     flex-wrap: wrap;
     align-content: flex-end;
+    overflow:hidden;
 }
-
 
 .buttons{
     display: grid;
@@ -73,6 +73,9 @@ body {
 }
 
 .additional-window {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     margin: 40px;
     padding: 18px;
     width: 300px;
@@ -85,12 +88,10 @@ body {
 }
 
 .calc-history {
-    height: 120px;
-    display: flex;
-    flex-direction: column-reverse;
-    flex-wrap: wrap;
-    align-content: flex-end;
     font-size: 30px;
     padding: 10px;
     font-family: AriL, sans-serif;
+    margin-top: auto;
+    text-align: right;
+    overflow: scroll;
 }
