@@ -32,14 +32,14 @@ function division (a, b) {
     }
 }
 
-function percent (a, b) {
-    return (a * b) / 100;
+function percent(a) {
+    return a / 100;
 }
 
 function equals() {
     let expression = display.innerText;
     let result = null;
-    let sign = ['+','-','x','/','%'];
+    let sign = ['+','-','x','/'];
     for (let i = 0; i < sign.length; i++) {
         let signIndex = expression.indexOf(sign[i]);
         if (signIndex !== -1) {
@@ -58,9 +58,6 @@ function equals() {
                 case "/":
                     result = division(num1, num2);
                     break;
-                case "%":
-                    result = percent(num1, num2);
-                    break;
             }
             break;
         }
@@ -69,8 +66,6 @@ function equals() {
     return result;
 }
 
-
-
 but.forEach((item)=> {
     item.addEventListener("click", function (event) {
         switch (event.target.innerText) {
@@ -78,7 +73,6 @@ but.forEach((item)=> {
             case "-":
             case "x":
             case "/":
-            case "%":
                 if (
                     stack[stack.length - 1] !== "+" &&
                     stack[stack.length - 1] !== "-" &&
@@ -87,6 +81,9 @@ but.forEach((item)=> {
                 ) {
                     display.innerText += event.target.innerText;
                 }
+                break;
+            case "%":
+                display.innerText = percent(parseFloat(display.innerText));
                 break;
             case "+/-":
                 if (display.innerText[0] === "-") {
