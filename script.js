@@ -3,6 +3,62 @@ let history = document.querySelector(".calc-history");
 let but = document.querySelectorAll(".btn");
 let stack = [];
 
+document.addEventListener("keydown", function(event) {
+    let key = event.key;
+    if (!Number.isNaN(Number(key))|| key === "+" || key === "-" || key === "x" || key === "/" || key === "%") {
+        if (display.innerText === "0" && key !== ".") {
+            display.innerText = key;
+        } else {
+            display.innerText += key;
+        }
+
+        stack.push(parseFloat(key));
+        sizeSymbol(display);
+    }
+    if (display.innerText === "0") {
+        display.innerText = event.target.innerText;
+    }
+    if (key === "Enter") {
+        display.innerText = equals();
+    }
+    if (key === "Escape") {
+        display.innerText = "0";
+        stack = [];
+    }
+    if (key === "Backspace") {
+        let currentText = display.innerText;
+        display.innerText = currentText.slice(0, -1);
+    }
+    if (key === "." || key === "ю") {
+        if (!display.innerText.includes(".")) {
+            display.innerText += ".";
+        }
+    }
+});
+function saveHistory(expression, result) {
+    let currentHistory = localStorage.getItem('history');
+    if (currentHistory) {
+        currentHistory = JSON.parse(currentHistory);
+    } else {
+        currentHistory = [];
+    }
+    let limitedExpression = expression.replace(/[+\-x/]/g, (match) => {
+        return match.slice(0, 7);
+    });
+    currentHistory.push({ expression, result });
+    localStorage.setItem('history', JSON.stringify(currentHistory));
+}
+
+function loadHistory() {
+    let currentHistory = localStorage.getItem('history');
+    if (currentHistory) {
+        currentHistory = JSON.parse(currentHistory);
+        currentHistory.forEach(item => {
+            history.innerText += item.expression + ' = ' + item.result + '\n';
+        });
+    }
+}
+
 function sizeSymbol (element) {
     if (element.innerText.length > 7) {
         element.style.fontSize = "45px";
@@ -15,15 +71,12 @@ function sizeSymbol (element) {
 function plus (a, b) {
     return a + b;
 }
-
 function minus (a, b) {
     return a - b;
 }
-
 function multi(a, b) {
     return a * b;
 }
-
 function division (a, b) {
     if (b !== 0) {
         return a / b;
@@ -31,7 +84,6 @@ function division (a, b) {
         return "Error!"
     }
 }
-
 function percent(a) {
     return a / 100;
 }
@@ -62,8 +114,13 @@ function equals() {
             break;
         }
     }
-    history.innerText += expression + " = " + result + "\n";
-    return result;
+    if (typeof result === 'number') {
+        history.innerText += expression + " = " + result + "\n";
+        saveHistory(expression, result);
+        return result;
+    } else {
+        return 'Error';
+    }
 }
 
 but.forEach((item)=> {
@@ -94,6 +151,7 @@ but.forEach((item)=> {
                 break;
             case "=":
                 display.innerText = equals();
+                stack = [];
                 break;
             case "AC":
                 display.innerText = "0";
@@ -106,7 +164,15 @@ but.forEach((item)=> {
                         display.innerText += event.target.innerText;
                     }
                 }
-        stack.push(event.target.innerText);
+        stack.push(parseFloat(event.target.innerText));
         sizeSymbol(display);
     });
+});
+
+loadHistory();
+
+let resetBtn = document.querySelector(".reset-history");
+resetBtn.addEventListener("click", function () {
+    history.innerText = "";
+    localStorage.removeItem('history');
 });

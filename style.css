@@ -95,3 +95,13 @@ body {
     text-align: right;
     overflow: scroll;
 }
+
+.reset-history {
+    background: orange;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
