@@ -1,6 +1,6 @@
 # Calculator
 Приложение калькулятор на JavaScript.
-# Используемые технологии
+# Technologies used
 - CSS
 - HTML
 - JavaScript
