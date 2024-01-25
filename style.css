@@ -23,6 +23,12 @@ body {
     box-shadow: 0 0 20px rgba(0,0,0,1);
 }
 
+/*.calc-sum {*/
+/*    padding: 10px;*/
+/*    font-size: 60px;*/
+/*    text-align: right;*/
+/*}*/
+
 .sum {
     font-size: 60px;
     padding: 10px;
@@ -58,6 +64,10 @@ body {
     user-select: none;
 }
 
+.btn:hover {
+    background-color: #7a7a7a;
+}
+
 .btn.zero {
     grid-area: zero;
     width: 100%;
@@ -65,11 +75,21 @@ body {
 }
 
 .btn.bg-grey {
-    background: #696969;
+    background: #838383;
+    color: #000000;
+    font-size: 26px;
+
+}
+.btn.bg-grey:hover {
+    background-color: #c7c7c7;
 }
 
 .btn.bg-orange {
     background: #fc9c14;
+}
+
+.btn.bg-orange:hover {
+    background-color: #ffb96d;
 }
 
 .additional-window {
