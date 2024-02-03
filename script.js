@@ -43,14 +43,14 @@ document.addEventListener("keydown", function(event) {
     }
 });
 // Функция для сохранения истории в локальное хранилище
-function saveHistory(expression, result) {
+function saveHistory(expression) {
     let currentHistory = localStorage.getItem('history');
     if (currentHistory) {
         currentHistory = JSON.parse(currentHistory);
     } else {
         currentHistory = [];
     }
-    currentHistory.push({ expression, result, });
+    currentHistory.push({ expression });
     localStorage.setItem('history', JSON.stringify(currentHistory));
 }
 
@@ -60,7 +60,7 @@ function loadHistory() {
     if (currentHistory) {
         currentHistory = JSON.parse(currentHistory);
         currentHistory.forEach(item => {
-            history.innerText += item.expression + ' = ' + item.result + '\n';
+            history.innerText += item.expression + ' = ' + '\n';
         });
     }
 }
@@ -94,15 +94,19 @@ function percent(a) {
     return a / 100;
 }
 
-//TODO: Переписать функцию equals
+let isEqualSignPressed = false;
 
 function equals() {
-    let expression = stack.join("") + display.innerText;
     let result = null;
     let sign = stack[1];
     let num1 = parseFloat(stack[0]);
-    let num2 = parseFloat(display.innerText);
-    console.log (sign, num1, num2);
+    let num2 = parseFloat(stack[2]);
+
+    if (isEqualSignPressed) {
+        num1 = parseFloat(result);
+        num2 = parseFloat(stack[2]);
+    }
+    console.log(sign, num1, num2);
     switch (sign) {
         case "+":
             result = plus(num1, num2);
@@ -119,61 +123,17 @@ function equals() {
     }
     if (result) {
         result = parseFloat(result.toFixed(3));
-        history.innerText += expression + " = " + result + "\n";
-        saveHistory(expression, result);
-        // stack.push(result);   //добавляет элемент последним в существующий
+    }
+        history.innerText += num1 + " " + sign + " " + num2 + " = " + result + "\n";
         display.innerText = result;
+        isEqualSignPressed = true;
+
+        // if (isEqualSignPressed) {
+            stack = [result, sign, num2];
+            isEqualSignPressed = false;
+        // }
         return result;
-    }
-    else {
-        return 'Error';
-    }
 }
-
-
-// function equals() {
-//     let expression = currentExpression + display.innerText;
-//     let result = null;
-//     let sign = currentExpression.slice(-1);
-//     let num1 = parseFloat(currentExpression.slice(0, currentExpression.length -1));
-//     let num2 = parseFloat(display.innerText);
-//     console.log (sign, num1, num2);
-//     console.log(currentExpression)
-//     switch (sign) {
-//         case "+":
-//             result = plus(num1, num2);
-//             break;
-//         case "-":
-//             result = minus(num1, num2);
-//             break;
-//         case "x":
-//             result = multi(num1, num2);
-//             break;
-//         case "/":
-//             result = division(num1, num2);
-//             break;
-//     }
-//     if (result) {
-//         result = parseFloat(result.toFixed(3));
-//         history.innerText += expression + " = " + result + "\n";
-//         saveHistory(expression, result);
-//         currentExpression = "";
-//         display.innerText = result;
-//         return result;
-//     } else {
-//         return 'Error';
-//     }
-// }
-
-// function updateExpression(operator) {
-//     if (currentExpression === "") {
-//         currentExpression += display.innerText + " " + operator;
-//     } else {
-//         currentExpression += display.innerText;
-//         currentExpression += " " + operator;
-//     }
-//     stack.push(display.innerText + " " + operator);
-// }
 but.forEach((item)=> {
     item.addEventListener("click", function (event) {
         switch (event.target.innerText) {
