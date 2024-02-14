@@ -1,8 +1,18 @@
 let display= document.querySelector(".sum");
 let history = document.querySelector(".calc-history");
 let but = document.querySelectorAll(".btn");
-let resetHistoryBtn = document.querySelector(".reset-history");
+let resetHistoryBtn = document.getElementById("reset-history");
+let wrapper = document.querySelector(".calculator-wrapper");
+let toggleBtn = document.getElementById("toggleBtn");
 let stack = [];
+
+toggleBtn.addEventListener("click", function () {
+    if (wrapper.classList.contains("open")) {
+        wrapper.classList.remove("open");
+    } else {
+        wrapper.classList.add("open");
+    }
+});
 
 document.addEventListener("keydown", function(event) {
     let key = event.key; // Получаем нажатую клавишу
@@ -42,6 +52,7 @@ document.addEventListener("keydown", function(event) {
         }
     }
 });
+
 // Функция для сохранения истории в локальное хранилище
 function saveHistory(expression) {
     let currentHistory = localStorage.getItem('history');
