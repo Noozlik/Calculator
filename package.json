@@ -1,0 +1,32 @@
+{
+  "name": "calculator-app",
+  "version": "1.0.0",
+  "description": "Web application engineering calculator",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile:scss": "node-sass --watch src/css/styles.scss src/css/styles.css",
+    "watch:scss": "nodemon --watch src/css/styles.scss --exec \"npm run compile:scss\"",
+    "start": "node index.js && open http://localhost:63342/Calculator/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noozlik/Calculator.git"
+  },
+  "keywords": [
+    "engineering",
+    "calculator",
+    "mathematics",
+    "calculations"
+  ],
+  "author": "Vertyachikh Dima",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Noozlik/Calculator/issues"
+  },
+  "homepage": "https://github.com/Noozlik/Calculator#readme",
+  "devDependencies": {
+    "node-sass": "^9.0.0",
+    "nodemon": "^3.0.3"
+  }
+}

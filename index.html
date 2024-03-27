@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru,en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name=viewport" content="width=device-width">
@@ -7,55 +7,58 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="calculator-wrapper">
-    <div class="calculator">
-<!--        <div class="calc-sum">0</div>-->
-        <div class="sum">0</div>
-        <div class="buttons">
-        <div class="btn ac bg-grey">AC</div>
-        <div class="btn plus_minus bg-grey">+/-</div>
-        <div class="btn percent bg-grey">%</div>
-        <div class="btn division bg-orange">÷</div>
+    <div class="calculator-wrapper">
+        <div class="calculator">
+            <div class="sum">0</div>
+            <div class="calc-sum">0</div>
+            <div class="main-buttons">
+                <div class="btn ac" onclick="playSound()">AC</div>
+                <div class="btn plus-minus" onclick="playSound()">+/-</div>
+                <div class="btn percent" onclick="playSound()">%</div>
+                <div class="btn division" onclick="playSound()">÷</div>
 
-        <div class="btn seven">7</div>
-        <div class="btn eigth">8</div>
-        <div class="btn nine">9</div>
-        <div class="btn multiplication bg-orange">x</div>
+                <div class="btn seven" onclick="playSound()">7</div>
+                <div class="btn eigth" onclick="playSound()">8</div>
+                <div class="btn nine" onclick="playSound()">9</div>
+                <div class="btn multiplication" onclick="playSound()">x</div>
 
-        <div class="btn four">4</div>
-        <div class="btn five">5</div>
-        <div class="btn six">6</div>
-        <div class="btn minus bg-orange">-</div>
+                <div class="btn four" onclick="playSound()">4</div>
+                <div class="btn five" onclick="playSound()">5</div>
+                <div class="btn six" onclick="playSound()">6</div>
+                <div class="btn minus" onclick="playSound()">-</div>
 
-        <div class="btn one">1</div>
-        <div class="btn two">2</div>
-        <div class="btn three">3</div>
-        <div class="btn plus bg-orange">+</div>
+                <div class="btn one" onclick="playSound()">1</div>
+                <div class="btn two" onclick="playSound()">2</div>
+                <div class="btn three" onclick="playSound()">3</div>
+                <div class="btn plus" onclick="playSound()">+</div>
 
-        <div class="btn zero">0</div>
-        <div class="btn comma">.</div>
-        <div class="btn equals bg-orange">=</div>
+                <div class="btn zero" onclick="playSound()">0</div>
+                <div class="btn comma" onclick="playSound()">.</div>
+                <div class="btn equals" onclick="playSound()">=</div>
+            </div>
+        </div>
+        <div class="slide-calculator">
+            <button class="toggleBtn">Engineering mode</button>
+            <div class="additional-buttons">
+                <div class="additional btn" onclick="playSound()">sin</div>
+                <div class="additional btn" onclick="playSound()">cos</div>
+                <div class="additional btn" onclick="playSound()">tan</div>
+                <div class="additional btn" onclick="playSound()">x²</div>
+                <div class="additional btn" onclick="playSound()">x³</div>
+                <div class="additional btn" onclick="playSound()">π</div>
+                <div class="additional btn" onclick="playSound()">(</div>
+                <div class="additional btn" onclick="playSound()">)</div>
+                <div class="additional btn" onclick="playSound()">√</div>
+                <div class="additional btn" onclick="playSound()">log</div>
+                <div class="additional btn" onclick="playSound()">ln</div>
+            </div>
+        </div>
+        <div class="additional-window">
+            <button class="reset-history">Reset history</button>
+            <button class="history-board">Calculation history</button>
+            <div class="calc-history"></div>
         </div>
     </div>
-    <div class="slide-calculator">
-<!--        <button class="open-close">Открыть/Закрыть</button>-->
-        <button id="toggleBtn">Open/Close</button>
-        <div class="additional-buttons">
-        <div class="additional-btn">sin</div>
-        <div class="additional-btn">cos</div>
-        <div class="additional-btn">tan</div>
-        <div class="additional-btn">x²</div>
-        <div class="additional-btn">π</div>
-        <div class="additional-btn">√</div>
-        <div class="additional-btn">(</div>
-        <div class="additional-btn">)</div>
-    </div>
-    </div>
-    <div class="additional-window">
-        <button id="reset-history">Сброс Истории</button>
-        <div class="calc-history"></div>
-    </div>
-</div>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
