@@ -30,14 +30,6 @@ body {
   position: absolute;
   z-index: 1;
 }
-.calculator .calc-sum {
-  padding-right: 5px;
-  margin-top: 5px;
-  color: #ab8e50;
-  font-size: 20px;
-  text-align: right;
-  border-radius: 15px;
-}
 .calculator .sum {
   color: #ab8e50;
   font-size: 60px;
@@ -51,29 +43,30 @@ body {
 .calculator .main-buttons {
   margin-top: 20px;
   display: grid;
-  grid-template-areas: "ac plus-minus percent division" "seven eigth nine multiplication" "four five six minus" "one two three plus" "zero zero comma equals";
+  grid-template-columns: repeat(4, 65px);
+  grid-template-rows: 65px 65px 65px 65px 65px;
   grid-gap: 8px;
-  justify-items: center;
 }
 .calculator .main-buttons .btn {
+  margin: auto;
+  width: 60px;
   background-image: linear-gradient(70deg, #e1dd72 0%, #a8c66c 50%, #1b6535 100%);
   background-position: 100% 0;
   background-size: 200% 200%;
   transition: 0.5s;
-  width: 60px;
-  border-radius: 50%;
-  border: 1px solid #1f6937;
-  text-align: center;
-  line-height: 60px;
   font-size: 30px;
+  line-height: 60px;
+  border: 1px solid #1f6937;
+  border-radius: 50%;
   cursor: pointer;
   user-select: none;
+  color: #ffffff;
 }
 .calculator .main-buttons .btn:hover {
   box-shadow: 0 0 0 0 rgba(0, 40, 120, 0);
   background-position: 0 0;
 }
-.calculator .main-buttons .btn.zero {
+.calculator .main-buttons.zero {
   grid-area: zero;
   width: 100%;
   border-radius: 34px;
@@ -98,7 +91,7 @@ body {
   font-size: 18px;
   position: absolute;
   transform: rotate(-90deg);
-  border-radius: 100px;
+  border-radius: 15px;
   border: 2px solid #1f6937;
 }
 .slide-calculator .additional-buttons {
@@ -165,7 +158,7 @@ body {
   top: 190px;
   background-image: linear-gradient(70deg, #e1dd72 0%, #a8c66c 50%, #1b6535 100%);
   color: #ffffff;
-  border-radius: 100px;
+  border-radius: 15px;
   border: 2px solid #1f6937;
   font-size: 18px;
   transform: rotate(90deg);

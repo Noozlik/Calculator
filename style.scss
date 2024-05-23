@@ -50,14 +50,6 @@ body {
   box-shadow: 0 0 10px $shadow;
   position: absolute;
   z-index: 1;
-  .calc-sum {
-    padding-right: 5px;
-    margin-top: 5px;
-    color: $sum-color;
-    font-size: 20px;
-    text-align: right;
-    border-radius: 15px;
-  }
   .sum {
     color: $sum-color;
     font-size: 60px;
@@ -71,38 +63,35 @@ body {
   .main-buttons {
     margin-top: 20px;
     display: grid;
-    grid-template-areas: "ac plus-minus percent division"
-    "seven eigth nine multiplication"
-    "four five six minus"
-    "one two three plus"
-    "zero zero comma equals";
+    grid-template-columns: repeat(4, 65px);
+    grid-template-rows: 65px 65px 65px 65px 65px;
     grid-gap: 8px;
-    justify-items: center;
     .btn {
+      margin: auto;
+      width: 60px;
       background-image: linear-gradient(70deg, $gradient-color1 0%, $gradient-color2 50%, $gradient-color3 100%);
       background-position: 100% 0;
       background-size: 200% 200%;
       transition: .5s;
-      width: 60px;
-      border-radius: $border-buttons;
-      border: 1px solid $border-color;
-      text-align: center;
-      line-height: 60px;
       font-size: $font-buttons;
+      line-height: 60px;
+      border: 1px solid $border-color;
+      border-radius: $border-buttons;
       cursor: pointer;
       user-select: none;
+      color: $text-color-button;
       &:hover {
-        box-shadow: 0 0 0 0 rgba(0, 40,120,0);
-        background-position: 0 0;
-      }
-      &.zero {
-        grid-area: zero;
-        width: 100%;
-        border-radius: 34px;
-      }
+                box-shadow: 0 0 0 0 rgba(0, 40,120,0);
+                background-position: 0 0;
+              }
     }
+      &.zero {
+                grid-area: zero;
+                width: 100%;
+                border-radius: 34px;
+              }
   }
-}
+  }
 
 .slide-calculator {
   padding: 10px;
@@ -122,7 +111,7 @@ body {
     font-size: $font-add-button;
     position: absolute;
     transform: rotate(-90deg);
-    border-radius: 100px;
+    border-radius: 15px;
     border: 2px solid $border-color;
   }
   .additional-buttons {
@@ -188,7 +177,7 @@ body {
     top: 190px;
     background-image: linear-gradient(70deg, $gradient-color1 0%, $gradient-color2 50%, $gradient-color3 100%);
     color: $text-color-button;
-    border-radius: 100px;
+    border-radius: 15px;
     border: 2px solid $border-color;
     font-size: $font-add-button;
     transform: rotate(90deg);

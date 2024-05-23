@@ -1,7 +1,7 @@
-let display= document.querySelector(".sum");
-let displayResult = document.querySelector(".calc-sum");
-let history = document.querySelector(".calc-history");
+const audio = new Audio("sound/click_button.mp3");
 
+let display= document.querySelector(".sum");
+let history = document.querySelector(".calc-history");
 let but = document.querySelectorAll(".btn");
 let resetHistoryBtn = document.querySelector(".reset-history");
 
@@ -11,20 +11,34 @@ let historyBoard = document.querySelector(".history-board");
 
 let stack = [];
 
-toggleBtn.addEventListener("click", function () {
-    if (wrapper.classList.contains("open")) {
-        wrapper.classList.remove("open");
+function toggleClass(element, className) {
+    if (element.classList.contains(className)) {
+        element.classList.remove(className);
     } else {
-        wrapper.classList.add("open");
+        element.classList.add(className);
     }
+}
+toggleBtn.addEventListener("click", function () {
+    toggleClass(wrapper, "open");
 });
 historyBoard.addEventListener("click", function () {
-    if (wrapper.classList.contains("open-window")) {
-        wrapper.classList.remove("open-window");
-    } else {
-        wrapper.classList.add("open-window");
-    }
+    toggleClass(wrapper, "open-window");
 });
+
+// toggleBtn.addEventListener("click", function () {
+//     if (wrapper.classList.contains("open")) {
+//         wrapper.classList.remove("open");
+//     } else {
+//         wrapper.classList.add("open");
+//     }
+// });
+// historyBoard.addEventListener("click", function () {
+//     if (wrapper.classList.contains("open-window")) {
+//         wrapper.classList.remove("open-window");
+//     } else {
+//         wrapper.classList.add("open-window");
+//     }
+// });
 
 document.addEventListener("keydown", function(event) {
     let key = event.key;
@@ -72,7 +86,7 @@ document.addEventListener("keydown", function(event) {
                 } else {
                     display.innerText += key;
                 }
-
+                reduce(display);
                 stack.push(parseFloat(key));
             }
             break;
@@ -85,7 +99,6 @@ resetHistoryBtn.addEventListener("click", function () {
 });
 
 function playSound() {
-    const audio = new Audio("sound/click_button.mp3");
     audio.play();
 }
 
@@ -112,15 +125,16 @@ function loadHistory() {
 }
 
 //Function to reduce font
-function sizeSymbol (element) {
+function reduce(element) {
     if (element.innerText.length > 8) {
         element.style.fontSize = "30px";
+    } else {
+        element.style.fontSize = "";
     }
-    if (element.innerText.length > 17) {
-        element.innerText = element.innerText.slice(0, 17);
+    if (element.innerText.length > 16) {
+        element.innerText = element.innerText.slice(0, 16);
     }
 }
-
 //Functions for the calculator
 function plus (a, b) {
     return a + b;
@@ -141,13 +155,43 @@ function division (a, b) {
 function percent(a) {
     return a / 100;
 }
-
 function cube(a) {
     return a * a * a;
 }
-
 function square(a) {
     return a * a;
+}
+function root(a) {
+    return a ** 0.5;
+}
+function sin(a) {
+    a = a % (2 * Math.PI); // Приводим значение угла к диапазону от 0 до 2π
+    let result = 0;
+
+    for (let n = 0; n <= 20; n++) {
+        result += ((-1) ** n) * (x ** (2 * n + 1)) / factorial(2 * n + 1);
+    }
+
+    return result;
+}
+function factorial(n) {
+    if (n === 0 || n === 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+function cos(a) {
+    return sin(a + Math.PI / 2);
+}
+function tan(a) {
+    return sin(a) / cos(a);
+}
+function lg(a) {
+    return Math.log10(a);
+}
+function  ln(a) {
+    return Math.log(a);
 }
 
 let isEqualSignPressed = false;
@@ -181,39 +225,35 @@ function equals() {
     }
 
     history.innerText += num1 + " " + sign + " " + num2 + " = " + result + "\n";
-    displayResult.innerText = num1 + " " + sign + " " + num2 + " = " + result;
     isEqualSignPressed = true;
     saveHistory();
-    stack = [result, sign, num2];
+    stack = [result, sign, num2];6
     isEqualSignPressed = false;
     return result;
 }
 
-function handleButtonClick(event) {
+function buttonProcessing(event) {
+    audio.play();
     switch (event.target.innerText) {
-        case "+":
-            stack.push(display.innerText);
-            stack.push(event.target.innerText);
-            display.innerText = "";
-            break;
-        case "-":
-            stack.push(display.innerText);
-            stack.push(event.target.innerText);
-            display.innerText = "";
-            break;
-        case "x":
-            stack.push(display.innerText);
-            stack.push(event.target.innerText);
-            display.innerText = "";
-            break;
-        case "÷":
+        case "+": case "-": case "x": case "÷":
             stack.push(display.innerText);
             stack.push(event.target.innerText);
             display.innerText = "";
             break;
         case "sin":
-            display.innerText = sin(display.innerText);
-            history.innerText += display.innerText;
+            display.innerText = sin(parseFloat(display.innerText));
+            history.innerText += display.innerText + "\n";
+            reduce(display);
+            break;
+        case "cos":
+            display.innerText = Math.cos(parseFloat(display.innerText));
+            history.innerText += display.innerText + "\n";
+            reduce(display);
+            break;
+        case "tan":
+            display.innerText = Math.tan(parseFloat(display.innerText));
+            history.innerText += display.innerText + "\n";
+            reduce(display);
             break;
         case "%":
             display.innerText = percent(display.innerText);
@@ -228,11 +268,31 @@ function handleButtonClick(event) {
             break;
         case "x²":
             display.innerText = square(display.innerText);
-            history.innerText += display.innerText;
+            history.innerText += display.innerText + "\n";
             break;
         case "x³":
             display.innerText = cube(display.innerText);
-            history.innerText += display.innerText;
+            history.innerText += display.innerText + "\n";
+            break;
+        case "log":
+            display.innerText = lg(parseFloat(display.innerText));
+            history.innerText += display.innerText + "\n";
+            reduce(display);
+            break;
+        case "ln":
+            display.innerText = ln(parseFloat(display.innerText));
+            history.innerText += display.innerText + "\n";
+            reduce(display);
+            break;
+        case "√":
+            display.innerText = root(display.innerText);
+            history.innerText += display.innerText + "\n";
+            reduce(display);
+            break;
+        case "π":
+            display.innerText = Math.PI;
+            history.innerText += display.innerText + "\n";
+            reduce(display);
             break;
         case "=":
             stack.push(display.innerText);
@@ -241,7 +301,6 @@ function handleButtonClick(event) {
         case "AC":
             stack = [];
             display.innerText = "0";
-            displayResult.innerText = "0";
             break;
         default:
             if (display.innerText === "0" && event.target.innerText !== ".") {
@@ -249,18 +308,18 @@ function handleButtonClick(event) {
             } else {
                 display.innerText += event.target.innerText;
             }
+            reduce(display);
     }
 }
 
 but.forEach((item) => {
-    item.addEventListener("click", handleButtonClick);
+    item.addEventListener("click", buttonProcessing);
 });
 loadHistory();
 
 const buttons = document.getElementsByClassName("btn");
-const audio = new Audio("sound/click_button.mp3");
 Array.prototype.forEach.call(buttons, function (button) {
-      button.addEventListener("click", function () {
-             audio.play();
-            });
-        });
+    button.addEventListener("click", function () {
+        audio.play();
+    });
+});
