@@ -1,96 +1,68 @@
-const audio = new Audio("sound/click_button.mp3");
+const audio = new Audio("./sound/click_button.mp3");
 
 let display= document.querySelector(".sum");
 let history = document.querySelector(".calc-history");
 let but = document.querySelectorAll(".btn");
 let resetHistoryBtn = document.querySelector(".reset-history");
 
-let wrapper = document.querySelector(".calculator-wrapper");
-let toggleBtn = document.querySelector(".toggleBtn");
-let historyBoard = document.querySelector(".history-board");
+const wrapper = document.querySelector(".calculator-wrapper");
+const engineeringMode = document.querySelector(".engineering-mode");
+const historyBoard = document.querySelector(".history-board");
 
 let stack = [];
 
-function toggleClass(element, className) {
-    if (element.classList.contains(className)) {
-        element.classList.remove(className);
+function toggleClass(element, classAdd) {
+    if (element.classList.contains("open")) {
+        element.classList.remove("open", "left", "right");
     } else {
-        element.classList.add(className);
+        element.classList.add("open", classAdd);
     }
 }
-toggleBtn.addEventListener("click", function () {
-    toggleClass(wrapper, "open");
+engineeringMode.addEventListener("click", function () {
+    toggleClass(wrapper, "left");
 });
 historyBoard.addEventListener("click", function () {
-    toggleClass(wrapper, "open-window");
+    toggleClass(wrapper, "right");
 });
-
-// toggleBtn.addEventListener("click", function () {
-//     if (wrapper.classList.contains("open")) {
-//         wrapper.classList.remove("open");
-//     } else {
-//         wrapper.classList.add("open");
-//     }
-// });
-// historyBoard.addEventListener("click", function () {
-//     if (wrapper.classList.contains("open-window")) {
-//         wrapper.classList.remove("open-window");
-//     } else {
-//         wrapper.classList.add("open-window");
-//     }
-// });
 
 document.addEventListener("keydown", function(event) {
     let key = event.key;
-    switch (key) {
-        case "+":
-            display.innerText += key;
-            stack.push(parseFloat(key));
-            break;
-        case "-":
-            display.innerText += key;
-            stack.push(parseFloat(key));
-            break;
-        case "x":
-            display.innerText += key;
-            stack.push(parseFloat(key));
-            break;
-        case "/":
-            display.innerText += key;
-            stack.push(parseFloat(key));
-            break;
-        case "%":
-            display.innerText += key;
-            stack.push(parseFloat(key));
-            break;
-        case ".":
-            if (!display.innerText.includes(".")) {
+        switch (key) {
+            case "(": case ")":
                 display.innerText += key;
-            }
-            break;
-        case "Enter":
-            display.innerText = equals();
-            break;
-        case "Escape":
-            display.innerText = "0";
-            stack = [];
-            break;
-        case "Backspace":
-            let currentText = display.innerText;
-            display.innerText = currentText.slice(0, -1);
-            break;
-        default:
-            if (!Number.isNaN(Number(key))) {
-                if (display.innerText === "0" && key !== ".") {
-                    display.innerText = key;
-                } else {
+                break;
+            case "+": case "-": case "x": case "÷": case "%":
+                display.innerText += key;
+                break;
+            case ".":
+                if (!display.innerText.includes(".")) {
                     display.innerText += key;
                 }
-                reduce(display);
-                stack.push(parseFloat(key));
-            }
-            break;
-    }
+                break;
+            case "Enter":
+                display.innerText = equals();
+                break;
+            case "Escape":
+                display.innerText = "0";
+                stack = [];
+                break;
+            case "Backspace":
+                let currentText = display.innerText;
+                display.innerText = currentText.slice(0, -1);
+                break;
+            default:
+                if (!Number.isNaN(Number(key)) || key === "0") {
+                    if (display.innerText === "0" && key !== ".") {
+                        display.innerText = key;
+                    } else {
+                        display.innerText += key;
+                    }
+                    reduce(display);
+                    stack.push(parseFloat(key));
+                }
+                break;
+        }
+    // }
 });
 
 resetHistoryBtn.addEventListener("click", function () {
@@ -169,9 +141,8 @@ function sin(a) {
     let result = 0;
 
     for (let n = 0; n <= 20; n++) {
-        result += ((-1) ** n) * (x ** (2 * n + 1)) / factorial(2 * n + 1);
+        result += ((-1) ** n) * (a ** (2 * n + 1)) / factorial(2 * n + 1);
     }
-
     return result;
 }
 function factorial(n) {
@@ -194,52 +165,123 @@ function  ln(a) {
     return Math.log(a);
 }
 
-let isEqualSignPressed = false;
-function equals() {
-    let result = null;
-    let sign = stack[1];
-    let num1 = parseFloat(stack[0]);
-    let num2 = parseFloat(stack[2]);
+// let isEqualSignPressed = false;
+// function equals() {
+//     let result = null;
+//     let sign = stack[1];
+//     let num1 = parseFloat(stack[0]);
+//     let num2 = parseFloat(stack[2]);
+//
+//     if (isEqualSignPressed) {
+//         num1 = parseFloat(result);
+//         num2 = parseFloat(stack[2]);
+//     }
+//     console.log(sign, num1, num2);
+//     switch (sign) {
+//         case "+":
+//             result = plus(num1, num2);
+//             break;
+//         case "-":
+//             result = minus(num1, num2);
+//             break;
+//         case "x":
+//             result = multi(num1, num2);
+//             break;
+//         case "÷":
+//             result = division(num1, num2);
+//             break;
+//     }
+//     if (result) {
+//         result = parseFloat(result.toFixed(3));
+//     }
+//
+//     history.innerText += num1 + " " + sign + " " + num2 + " = " + result + "\n";
+//     isEqualSignPressed = true;
+//     saveHistory();
+//     stack = [result, sign, num2];
+//     isEqualSignPressed = false;
+//     return result;
+// }
 
-    if (isEqualSignPressed) {
-        num1 = parseFloat(result);
-        num2 = parseFloat(stack[2]);
+function signOrder(expression) {
+    let numbers = [];
+    let operators = [];
+    let precedence = {
+        '+': 1,
+        '-': 1,
+        '*': 2,
+        '/': 2
+    };
+
+    function computeExpression() {
+        let operator = operators.pop();
+        let a = numbers.pop();
+        let b = numbers.pop();
+
+        switch (operator) {
+            case '+':
+                numbers.push(plus(a, b));
+                break;
+            case '-':
+                numbers.push(minus(a, b));
+                break;
+            case 'x':
+                numbers.push(multi(a, b));
+                break;
+            case '÷':
+                numbers.push(division(a, b));
+                break;
+        }
     }
-    console.log(sign, num1, num2);
-    switch (sign) {
-        case "+":
-            result = plus(num1, num2);
-            break;
-        case "-":
-            result = minus(num1, num2);
-            break;
-        case "x":
-            result = multi(num1, num2);
-            break;
-        case "÷":
-            result = division(num1, num2);
-            break;
+
+    for (let i = 0; i < expression.length; i++) {
+        let token = expression[i];
+
+        if (!isNaN(token)) {
+            numbers.push(parseFloat(token));
+        } else if (token in precedence) {
+            while (
+                operators.length > 0 &&
+                precedence[operators[operators.length - 1]] >= precedence[token]
+                ) {
+                computeExpression();
+            }
+            operators.push(token);
+        }
     }
-    if (result) {
+
+    while (operators.length > 0) {
+        computeExpression();
+    }
+
+    return numbers[0];
+}
+
+function equals() {
+    let result = signOrder(stack);
+
+    if(result || result === 0) {
         result = parseFloat(result.toFixed(3));
     }
 
-    history.innerText += num1 + " " + sign + " " + num2 + " = " + result + "\n";
-    isEqualSignPressed = true;
+    let expression = stack.join(' ');
+    history.innerText += `${expression} = ${result}\n`;
     saveHistory();
-    stack = [result, sign, num2];6
-    isEqualSignPressed = false;
+
+    stack = [result.toString()];
+    display.innerText = result.toString();
     return result;
 }
 
 function buttonProcessing(event) {
-    audio.play();
-    switch (event.target.innerText) {
-        case "+": case "-": case "x": case "÷":
-            stack.push(display.innerText);
-            stack.push(event.target.innerText);
-            display.innerText = "";
-            break;
+        audio.play();
+        switch (event.target.innerText) {
+            case "+": case "-": case "x": case "÷":
+                stack.push(display.innerText);
+                stack.push(event.target.innerText);
+                display.innerText = "";
+                // display.innerText += event.target.innerText;
+                break;
         case "sin":
             display.innerText = sin(parseFloat(display.innerText));
             history.innerText += display.innerText + "\n";
@@ -323,3 +365,4 @@ Array.prototype.forEach.call(buttons, function (button) {
         audio.play();
     });
 });
+

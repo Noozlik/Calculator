@@ -1,52 +1,31 @@
-$background-main: #e1dd72;
-$background-calc: rgba(255,255,255, 0.6);
-$text-color-button: #ffffff;
-$history-color-text: #C6A86C;
-$sum-color: #ab8e50;
-$border-color: #1f6937;
-$gradient-color1: #e1dd72;
-$gradient-color2: #a8c66c;
-$gradient-color3: #1b6535;
-
-$shadow: rgba(0,0,0,1);
-$blur: blur(10px);
-
-$font-add-button: 18px;
-$font-buttons: 30px;
-$border: 30px;
-$border-buttons: 50%;
-
-$small: 480px;
-$medium: 768px;
-$large: 1024px;
-
+@import 'variables';
 
 body {
   margin: 0 auto;
-  font-family: arial, sans-serif;
+  font-family: $font-family;
   background: $background-main;
 }
+
 .calculator-wrapper {
-  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  &.open .slide-calculator {
+  &.left .slide-calculator {
     margin-left: -400px;
     z-index: 0;
   }
-  &.open-window .additional-window {
+  &.right .additional-window {
     margin-right: -460px;
     z-index: 0;
   }
 }
+
 .calculator {
   padding: 20px;
-  border-radius: $border;
+  border-radius: $border-radius;
   background: $background-calc;
   backdrop-filter: $blur;
-  color: $text-color-button;
   box-shadow: 0 0 10px $shadow;
   position: absolute;
   z-index: 1;
@@ -65,84 +44,59 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 65px);
     grid-template-rows: 65px 65px 65px 65px 65px;
-    grid-gap: 8px;
-    .btn {
-      margin: auto;
-      width: 60px;
-      background-image: linear-gradient(70deg, $gradient-color1 0%, $gradient-color2 50%, $gradient-color3 100%);
-      background-position: 100% 0;
-      background-size: 200% 200%;
-      transition: .5s;
-      font-size: $font-buttons;
-      line-height: 60px;
-      border: 1px solid $border-color;
-      border-radius: $border-buttons;
-      cursor: pointer;
-      user-select: none;
-      color: $text-color-button;
-      &:hover {
-                box-shadow: 0 0 0 0 rgba(0, 40,120,0);
-                background-position: 0 0;
-              }
-    }
-      &.zero {
-                grid-area: zero;
-                width: 100%;
-                border-radius: 34px;
-              }
+    grid-gap: $grid-gap;
   }
+}
+
+.btn {
+  width: 60px;
+  height: 60px;
+  background-image: $linear-gradient;
+  background-position: 100% 0;
+  background-size: 200% 200%;
+  transition: .5s;
+  font-size: $font-buttons;
+  border: $border;
+  border-radius: $border-buttons;
+  cursor: pointer;
+  user-select: none;
+  color: $text-color-button;
+  &:hover {
+    box-shadow: 0 0 0 0 rgba(0, 40,120,0);
+    background-position: 0 0;
   }
+}
 
 .slide-calculator {
   padding: 10px;
   left: 50%;
   margin-left: -180px;
-  border-radius: $border;
+  border-radius: $border-radius;
   position: absolute;
   background: $background-calc;
   backdrop-filter: $blur;
   box-shadow: 0 0 20px $shadow;
   transition: left 1s ease;
-  .toggleBtn {
+  .engineering-mode {
     bottom: 155px;
     left: -80px;
-    background-image: linear-gradient(70deg, $gradient-color1 0%, $gradient-color2 50%, $gradient-color3 100%);
+    background-image: $linear-gradient;
     color: $text-color-button;
     font-size: $font-add-button;
     position: absolute;
     transform: rotate(-90deg);
-    border-radius: 15px;
-    border: 2px solid $border-color;
+    border-radius: $border-radius;
+    border: $border;
   }
   .additional-buttons {
     margin: 15px;
     display: grid;
     grid-template-columns: repeat(3, 65px);
     grid-template-rows: 65px 65px 65px 65px;
-    grid-gap: 8px;
-  }
-  .additional {
-    margin: auto;
-    width: 60px;
-    height: 60px;
-    background-image: linear-gradient(70deg, $gradient-color1 0%, $gradient-color2 50%, $gradient-color3 100%);
-    background-position: 100% 0;
-    background-size: 200% 200%;
-    border: 1px solid $border-color;
-    transition: .5s;
-    border-radius: $border-buttons;
-    text-align: center;
-    line-height: 60px;
-    font-size: $font-buttons;
-    cursor: pointer;
-    user-select: none;
-    color: $text-color-button;
-    &:hover {
-      box-shadow: 0 0 0 0 rgba(0, 40,120,0);
-      background-position: 0 0;
-    }
+    grid-gap: $grid-gap;
   }
 }
+
 .additional-window {
   padding: 20px;
   right: 50%;
@@ -154,7 +108,7 @@ body {
   width: 280px;
   height: 400px;
   box-shadow: 0 0 10px $shadow;
-  border-radius: $border;
+  border-radius: $border-radius;
   background: $background-calc;
   backdrop-filter: $blur;
   color: $text-color-button;
@@ -168,7 +122,7 @@ body {
     color: $text-color-button;
     font-size: $font-add-button;
     border-radius: 30px;
-    border: 2px solid $border-color;
+    border: $border;
     cursor: pointer;
   }
   .history-board {
@@ -177,17 +131,110 @@ body {
     top: 190px;
     background-image: linear-gradient(70deg, $gradient-color1 0%, $gradient-color2 50%, $gradient-color3 100%);
     color: $text-color-button;
-    border-radius: 15px;
-    border: 2px solid $border-color;
+    border-radius: $border-radius;
+    border: $border;
     font-size: $font-add-button;
     transform: rotate(90deg);
   }
   .calc-history {
     color: $history-color-text;
     font-size: 20px;
-    font-family: AriL, sans-serif;
     margin-top: auto;
     text-align: right;
     overflow: scroll;
   }
+}
+
+// Мобильные устройства до 480px
+@media (max-width: $small) {
+  .calculator {
+    width: 270px;
+
+    .main-buttons {
+      grid-template-columns: repeat(4, 50px);
+      grid-template-rows: 50px 50px 50px 50px 50px;
+    }
+
+    .btn {
+      font-size: 14px;
+    }
+
+    .sum {
+      font-size: 40px;
+      height: 60px;
+    }
+  }
+
+
+}
+
+// Планшеты от 481px до 768px
+@media (min-width: $small) and (max-width: $medium) {
+  .calculator {
+    width: 320px;
+
+    .main-buttons {
+      grid-template-columns: repeat(4, 60px);
+      grid-template-rows: 60px 60px 60px 60px 60px;
+    }
+
+    .btn {
+      font-size: 16px;
+    }
+
+    .sum {
+      font-size: 50px;
+      height: 70px;
+    }
+  }
+}
+
+// Большие экраны от 2560px и выше
+@media (min-width: $xlarge) {
+  .calculator {
+    height: 45em;
+    width: 30em;
+    padding: 30px;
+
+    .sum {
+      font-size: 100px;
+      height: 130px;
+    }
+
+    .main-buttons {
+      grid-template-columns: repeat(4, 95px);
+      grid-template-rows: 80px 80px 80px 80px 80px;
+      grid-gap: 33px;
+    }
+
+    .btn {
+      font-size: 54px;
+      height: 100px;
+      width: 100px;
+    }
+  }
+
+  .additional-window {
+    height: 35em;
+    width: 30em;
+    right: 610px;
+
+    .history-board {
+
+    }
+  }
+
+  .bottom {
+
+  }
+  .history-board {
+
+  }
+}
+  .calculator-wrapper {
+
+  //  &.left .slide-calculator {
+  //
+  //  }
+  //}
 }

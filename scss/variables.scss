@@ -1,0 +1,38 @@
+//Цветовые переменные
+$background-main: #e1dd72;
+$background-calc: rgba(255,255,255, 0.6);
+$text-color-button: #ffffff;
+$history-color-text: #C6A86C;
+$sum-color: #ab8e50;
+
+//Границы и тени
+$border: 1px solid #1f6937;
+$border-radius: 30px;
+$border-buttons: 50%;
+$shadow: rgba(0,0,0,1);
+$blur: blur(10px);
+
+//Градиенты
+$gradient-color1: #e1dd72;
+$gradient-color2: #a8c66c;
+$gradient-color3: #1b6535;
+$linear-gradient: linear-gradient(70deg, $gradient-color1 0%, $gradient-color2 50%, $gradient-color3 100%);
+
+//Шрифты
+$font-family: arial, sans-serif;
+$font-add-button: 18px;
+$font-buttons: 30px;
+
+//Отступы
+$margin: 0 auto;
+
+//Прочее
+$grid-gap: 8px;
+
+//Размер экрана
+$small: 425px;
+$medium: 768px;
+$large: 1024px;
+$xlarge: 2560px;
+
+
